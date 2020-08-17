@@ -32,6 +32,9 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
     @Autowired
     private IUserRoleService userRoleService;
 
+    @Autowired
+    private IUserService thisService4JetCache;
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -55,14 +58,32 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IUserS
         return userRoleService.removeByUserId(id);
     }
 
+    @CacheInvalidate(name = "user::", key = "#id")
+    @Override
+    public void refreshCacheUserByUniqueId(String id) {
+
+    }
+
     @Override
     @Transactional
     @CacheInvalidate(name = "user::", key = "#user.id")
     public boolean update(User user) {
-        if (StringUtils.isNotBlank(user.getPassword()))
+        if (StringUtils.isNotBlank(user.getPassword())) {
             user.setPassword(passwordEncoder().encode(user.getPassword()));
+        }
         boolean isSuccess = this.updateById(user);
         userRoleService.saveBatch(user.getId(), user.getRoleIds());
+        if (isSuccess && StringUtils.isNotBlank(user.getPassword())) {
+            /**
+             * 密码修改时,需要手动刷新,不然缓存会影响到 rest接口 {@link #getByUniqueId} 缓存的密码是旧密码导致认证失败
+             */
+            if (StringUtils.isNotBlank(user.getMobile())) {
+                thisService4JetCache.refreshCacheUserByUniqueId(user.getMobile());
+            }
+            if (StringUtils.isNotBlank(user.getUsername())) {
+                thisService4JetCache.refreshCacheUserByUniqueId(user.getUsername());
+            }
+        }
         return isSuccess;
     }
 

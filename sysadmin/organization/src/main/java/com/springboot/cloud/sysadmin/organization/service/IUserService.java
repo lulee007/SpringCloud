@@ -52,4 +52,6 @@ public interface IUserService {
      * @param id
      */
     boolean delete(String id);
+
+    void refreshCacheUserByUniqueId(String id);
 }
