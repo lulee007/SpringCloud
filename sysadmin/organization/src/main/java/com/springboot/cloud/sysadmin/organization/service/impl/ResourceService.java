@@ -1,5 +1,6 @@
 package com.springboot.cloud.sysadmin.organization.service.impl;
 
+import com.alicp.jetcache.anno.CacheInvalidate;
 import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.Cached;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -50,14 +51,15 @@ public class ResourceService extends ServiceImpl<ResourceMapper, Resource> imple
     }
 
     @Override
-    @Cached(name = "resource::", key = "#id", cacheType = CacheType.BOTH)
+    @CacheInvalidate(name = "resource::", key = "#id")
     public boolean delete(String id) {
         return this.removeById(id);
     }
 
     @Override
-    @Cached(name = "resource::", key = "#resource.id", cacheType = CacheType.BOTH)
+    @CacheInvalidate(name = "resource::", key = "#resource.id")
     public boolean update(Resource resource) {
+        eventSender.send(BusConfig.ROUTING_KEY, resource);
         return this.updateById(resource);
     }
 
