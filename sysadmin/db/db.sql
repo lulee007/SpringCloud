@@ -217,13 +217,13 @@ VALUES (101, '新增用户', 'user_manager:btn_add', 'user', '/user', 'POST', '�
        (309, '删除网关路由', 'gateway_manager:adel', 'gateway', '/gateway/routes/{id}', 'DELETE', '删除网关路由', now(), now(), 'system', 'system'),
        (310, '查看网关路由', 'gateway_manager:view', 'gateway', '/gateway/routes/{id}', 'GET', '查看网关路由', now(), now(), 'system', 'system'),
        (311, '搜索网关路由', 'gateway_manager:query', 'gateway', '/gateway/routes/conditions', 'POST', '搜索网关路由', now(), now(), 'system', 'system'),
-       (312, '全局加载路由', 'gateway_manager:overload', 'gateway', '/gateway/routes/overload', 'POST', '全局加载路由', now(), now(), 'system', 'system'),
-       (313, '新增网关路由', 'resource_manager:add', 'resource', '/resource', 'POST', '新增资源路由', now(), now(), 'system', 'system'),
-       (314, '修改网关路由', 'resource_manager:edit', 'resource', '/resource/{id}', 'PUT', '修改资源', now(), now(), 'system', 'system'),
-       (315, '删除网关路由', 'resource_manager:adel', 'resource', '/resource/{id}', 'DELETE', '删除资源', now(), now(), 'system', 'system'),
-       (316, '查看网关路由', 'resource_manager:view', 'resource', '/resource/{id}', 'GET', '查看资源', now(), now(), 'system', 'system'),
-       (317, '搜索网关路由', 'resource_manager:query', 'resource', '/resource/conditions', 'POST', '搜索资源', now(), now(), 'system', 'system'),
-       (318, '全局加载路由', 'resource_manager:all', 'resource', '/resource/all', 'GET', '查询全部资源', now(), now(), 'system', 'system');
+       (312, '重新加载路由', 'gateway_manager:overload', 'gateway', '/gateway/routes/overload', 'POST', '全局加载路由', now(), now(), 'system', 'system'),
+       (313, '新增资源', 'resource_manager:add', 'resource', '/resource', 'POST', '新增资源路由', now(), now(), 'system', 'system'),
+       (314, '修改资源', 'resource_manager:edit', 'resource', '/resource/{id}', 'PUT', '修改资源', now(), now(), 'system', 'system'),
+       (315, '删除资源', 'resource_manager:adel', 'resource', '/resource/{id}', 'DELETE', '删除资源', now(), now(), 'system', 'system'),
+       (316, '查看资源', 'resource_manager:view', 'resource', '/resource/{id}', 'GET', '查看资源', now(), now(), 'system', 'system'),
+       (317, '搜索资源', 'resource_manager:query', 'resource', '/resource/conditions', 'POST', '搜索资源', now(), now(), 'system', 'system'),
+       (318, '查看全部资源', 'resource_manager:all', 'resource', '/resource/all', 'GET', '查询全部资源', now(), now(), 'system', 'system');
 
 -- 用户关系授权
 INSERT INTO user_role_relation (id, user_id, role_id, created_time, updated_time, created_by, updated_by)
