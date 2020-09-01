@@ -72,10 +72,11 @@ public class ResourceService extends ServiceImpl<ResourceMapper, Resource> imple
     @Override
     public IPage<Resource> query(Page page, ResourceQueryParam resourceQueryParam) {
         QueryWrapper<Resource> queryWrapper = resourceQueryParam.build();
-        queryWrapper.eq(StringUtils.isNotBlank(resourceQueryParam.getName()), "name", resourceQueryParam.getName());
+        queryWrapper.like(StringUtils.isNotBlank(resourceQueryParam.getName()), "name", resourceQueryParam.getName());
         queryWrapper.eq(StringUtils.isNotBlank(resourceQueryParam.getType()), "type", resourceQueryParam.getType());
-        queryWrapper.eq(StringUtils.isNotBlank(resourceQueryParam.getUrl()), "url", resourceQueryParam.getUrl());
+        queryWrapper.like(StringUtils.isNotBlank(resourceQueryParam.getUrl()), "url", resourceQueryParam.getUrl());
         queryWrapper.eq(StringUtils.isNotBlank(resourceQueryParam.getMethod()), "method", resourceQueryParam.getMethod());
+        queryWrapper.orderByAsc("url","type");
         return this.page(page, queryWrapper);
     }
 
